@@ -1,0 +1,144 @@
+name = "testnet"
+description = "A reproduction of the testnet configuration with latency emulation enabled."
+
+# Global config
+cl.config.log_level = "debug"
+
+cl.config.discovery_num_inbound_peers = 50
+cl.config.discovery_num_outbound_peers = 50
+
+latency_emulation = true
+engine_api_connection = "ipc"
+
+# Topology (testnet reproduction):
+# 10 validators across 4 geographic regions
+# 15 full nodes across multiple geographic regions,
+# including both first-party and third-party operator nodes
+
+[node_groups]
+PRIMARY_VALIDATORS = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7"]
+
+# us-east-1 validators
+[nodes.validator-1]
+region = "us-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+[nodes.validator-2]
+region = "us-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+[nodes.validator-3]
+region = "us-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+# eu-west-2 validator
+[nodes.validator-4]
+region = "eu-west-2"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+# ap-south-1 validators
+[nodes.validator-5]
+region = "ap-south-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+[nodes.validator-6]
+region = "ap-south-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+[nodes.validator-7]
+region = "ap-south-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+
+# ca-central-1 validators
+[nodes.validator-8]
+region = "ca-central-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 30
+
+[nodes.validator-9]
+region = "ca-central-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 30
+
+[nodes.validator-10]
+region = "ca-central-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 30
+
+# sa-east-1 full nodes
+[nodes.full-1]
+region = "sa-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 150
+
+[nodes.full-2]
+region = "sa-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 150
+
+[nodes.full-3]
+region = "sa-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 20
+
+[nodes.full-4]
+region = "sa-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 20
+
+[nodes.full-5]
+region = "sa-east-1"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 150
+
+# eu-west-2 full node
+[nodes.full-6]
+region = "eu-west-2"
+cl_persistent_peers = ["ALL_VALIDATORS"]
+start_at = 150
+
+# third-party full nodes
+[nodes.full-ext-1]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-2]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-3]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-4]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-5]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-6]
+region = "ap-southeast-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-7]
+region = "us-west-1"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-8]
+region = "eu-west-2"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50
+
+[nodes.full-ext-9]
+region = "ap-south-1"
+cl_persistent_peers = ["PRIMARY_VALIDATORS"]
+start_at = 50

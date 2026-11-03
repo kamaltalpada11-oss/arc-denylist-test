@@ -1,0 +1,70 @@
+name = "nightly-chaos-testing"
+
+# Global config
+cl.config.log_level = "debug"
+
+latency_emulation = true
+engine_api_connection = "ipc"
+
+# Topology:
+# 10 validators across 4 geographic regions
+# 2 first-party full nodes across 2 geographic regions
+
+# us-east-1 validators
+[nodes.validator-1]
+region = "us-east-1"
+cl_persistent_peers = ["validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+[nodes.validator-2]
+region = "us-east-1"
+cl_persistent_peers = ["validator-1", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+[nodes.validator-3]
+region = "us-east-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+# eu-west-2 validator
+[nodes.validator-4]
+region = "eu-west-2"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+# ap-south-1 validators
+[nodes.validator-5]
+region = "ap-south-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+[nodes.validator-6]
+region = "ap-south-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-7", "validator-8", "validator-9", "validator-10"]
+
+[nodes.validator-7]
+region = "ap-south-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-8", "validator-9", "validator-10"]
+
+# ca-central-1 validators
+[nodes.validator-8]
+region = "ca-central-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-9", "validator-10"]
+start_at = 30
+
+[nodes.validator-9]
+region = "ca-central-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-10"]
+start_at = 30
+
+[nodes.validator-10]
+region = "ca-central-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9"]
+start_at = 30
+
+# sa-east-1 full node
+[nodes.full-1]
+region = "sa-east-1"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+start_at = 150
+
+# eu-west-2 full node
+[nodes.full-2]
+region = "eu-west-2"
+cl_persistent_peers = ["validator-1", "validator-2", "validator-3", "validator-4", "validator-5", "validator-6", "validator-7", "validator-8", "validator-9", "validator-10"]
+start_at = 150

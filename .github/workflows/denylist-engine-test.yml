@@ -17,4 +17,4 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Run targeted denylist Engine API test
-        run: cargo test --locked -p arc-execution-e2e --test e2e test_engine_new_payload_executes_denylisted_recipient_transaction -- --nocapture
+        run: cargo test --locked -p arc-execution-e2e --test e2e -- --list

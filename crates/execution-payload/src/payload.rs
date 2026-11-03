@@ -230,7 +230,13 @@ fn purge_unprocessable_tx<P: TransactionPool>(
         evict_unincludable_txs(pool, invalid_tx_list, vec![tx_hash]);
     }
 }
-cresumes the panic
+/// Handles the result of a `catch_unwind` call around the inner payload builder's
+/// `try_build`.
+///
+/// This function processes three cases:
+/// 1. Success: Returns the build outcome directly
+/// 2. Builder error: Purges unprocessable transactions, then returns the error
+/// 3. Panic: Purges all pending transactions, then resumes the panic
 fn handle_build_res<T, P: TransactionPool>(
     res: CatchUnwindBuildResult<T>,
     pool: &P,

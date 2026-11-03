@@ -95,7 +95,7 @@ async fn sign_and_submit_tx(
 #[tokio::test]
 async fn test_denylisted_to_rejected() -> Result<()> {
     reth_tracing::init_test_tracing();
-    let denylisted_to = address!("0xdead000000000000000000000000000000000001");
+    let recipient = address!("0xdead000000000000000000000000000000000002");
     let chain_spec = localdev_with_denylisted_addresses(vec![denylisted_to]);
     let addresses_denylist_config = denylist_config_enabled(Vec::new());
     let err = sign_and_submit_tx(chain_spec, addresses_denylist_config, denylisted_to)

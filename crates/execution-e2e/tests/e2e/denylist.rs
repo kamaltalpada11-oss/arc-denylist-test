@@ -142,7 +142,7 @@ async fn test_engine_new_payload_executes_denylisted_recipient_transaction() -> 
 
     reth_tracing::init_test_tracing();
 
-    let recipient = address!("0xdead000000000000000000000000000000000001");
+    let recipient = address!("0xdead000000000000000000000000000000000002");
     let chain_spec = localdev_with_denylisted_addresses(vec![recipient]);
 
     // Node A: the recipient is excluded from this node's txpool denylist.

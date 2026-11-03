@@ -230,6 +230,22 @@ fn purge_unprocessable_tx<P: TransactionPool>(
         evict_unincludable_txs(pool, invalid_tx_list, vec![tx_hash]);
     }
 }
+/// Purge all pending transactions from the pool, then resume the original panic.
+fn purge_pending_and_resume_panic<P: TransactionPool>(
+    panic: Box<dyn std::any::Any + Send>,
+    pool: &P,
+    invalid_tx_list: Option<&InvalidTxList>,
+) -> ! {
+    let pending_hashes: Vec<TxHash> = pool
+        .pending_transactions()
+        .iter()
+        .inspect(|tx| log_transaction_details(tx, "pending TX data on payload builder panic"))
+        .map(|tx| *tx.hash())
+        .collect();
+
+    evict_unincludable_txs(pool, invalid_tx_list, pending_hashes);
+    std::panic::resume_unwind(panic)
+}
 /// Handles the result of a `catch_unwind` call around the inner payload builder's
 /// `try_build`.
 ///

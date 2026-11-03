@@ -27,7 +27,7 @@ use jsonrpsee::{core::RpcResult, proc_macros::rpc, RpcModule};
 pub type DefaultArcApiImpl = ArcApiImpl<HttpCertificateSource>;
 
 /// ARC namespace exposing RPC methods. Full reference: `crates/node/src/rpc/openapi/openapi.yaml`.
-(server, namespace = "arc")]
+#[rpc(server, namespace = "arc")]
 #[async_trait]
 pub trait ArcApi {
     /// Returns version information for the execution layer

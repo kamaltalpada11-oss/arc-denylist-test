@@ -1,0 +1,20 @@
+﻿name: Denylist Engine API Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  denylist-engine-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libclang-dev zlib1g-dev
+
+      - name: Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Run targeted denylist Engine API test
+        run: cargo test --locked -p arc-execution-e2e --test e2e test_engine_new_payload_executes_denylisted_recipient_transaction -- --exact --nocapture

@@ -11,10 +11,11 @@ jobs:
       CARGO_TERM_COLOR: always
       CARGO_BUILD_JOBS: 2
     steps:
-      - name: Checkout pinned Arc source snapshot
+      - name: Checkout exact Arc source commit
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
-          ref: 628010c78f04f298d4f90bea006feb7e1294c2a3
+          repository: circlefin/arc-node
+          ref: 6e764023ee6515fe70573e123ed2db912a7207b4
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libclang-dev zlib1g-dev
@@ -22,8 +23,9 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
-      - name: Record toolchain and runner disk
+      - name: Record source revision, toolchain, and runner disk
         run: |
+          git rev-parse HEAD
           rustc --version
           cargo --version
           df -h

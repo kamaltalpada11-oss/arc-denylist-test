@@ -846,6 +846,32 @@ mod tests {
     }
 
     #[test]
+    fn test_stream_with_sequence_gap_and_data_after_transport_fin_completes() {
+        let peer = PeerId::random();
+        let stream_id = make_stream_id(101);
+        let mut streams = PartStreamsMap::default();
+
+        let messages = [
+            make_message(&stream_id, 0, make_init_part()),
+            make_message(&stream_id, 1, make_data_part(42)),
+            make_message(&stream_id, 3, make_fin_part()),
+            make_fin_message(&stream_id, 4),
+            make_message(&stream_id, 5, make_data_part(99)),
+        ];
+
+        let mut result = InsertResult::Pending;
+
+        for message in messages {
+            result = streams.insert(peer, message);
+        }
+
+        assert!(
+            matches!(result, InsertResult::Complete(_)),
+            "expected count-matching sequence gap to complete the stream"
+        );
+    }
+    
+    #[test]
     fn test_insert_out_of_order_completes_and_removes_stream() {
         let peer_1 = PeerId::random();
         let stream_1 = make_stream_id(101);

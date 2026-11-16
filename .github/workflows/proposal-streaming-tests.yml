@@ -1,0 +1,32 @@
+name: Proposal Stream Unit Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  streaming-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_BUILD_JOBS: 2
+    steps:
+      - name: Checkout pinned Arc source snapshot
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          ref: 628010c78f04f298d4f90bea006feb7e1294c2a3
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libclang-dev zlib1g-dev
+
+      - name: Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Record toolchain and runner disk
+        run: |
+          rustc --version
+          cargo --version
+          df -h
+
+      - name: Run focused proposal-stream tests
+        run: cargo test --locked -p arc-node-consensus streaming::tests -j 2 -- --nocapture

@@ -849,7 +849,7 @@ mod tests {
     fn test_stream_with_sequence_gap_and_data_after_transport_fin_completes() {
         let peer = PeerId::random();
         let stream_id = make_stream_id(101);
-        let mut streams = PartStreamsMap::default();
+        let mut streams = PartStreamsMap::new(Height::new(1), 1);
 
         let messages = [
             make_message(&stream_id, 0, make_init_part()),
